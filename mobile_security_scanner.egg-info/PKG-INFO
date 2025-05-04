@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: mobile-security-scanner
+Version: 1.0.0
+Summary: Automated mobile application security scanner
+Home-page: https://github.com/yourusername/mobile-security-scanner
+Author: Your Name
+Author-email: your.email@example.com
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Security
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: frida>=16.1.4
+Requires-Dist: frida-tools>=12.1.1
+Requires-Dist: androguard>=3.4.0
+Requires-Dist: objection>=1.11.0
+Requires-Dist: mitmproxy>=10.1.5
+Requires-Dist: requests>=2.31.0
+Requires-Dist: beautifulsoup4>=4.12.2
+Requires-Dist: lxml>=4.9.3
+Requires-Dist: pyyaml>=6.0.1
+Requires-Dist: jinja2>=3.1.2
+Requires-Dist: colorama>=0.4.6
+Requires-Dist: click>=8.1.7

@@ -1,0 +1,2 @@
+[console_scripts]
+mobile-scanner = src.main:main

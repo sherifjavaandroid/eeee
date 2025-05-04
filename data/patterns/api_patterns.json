@@ -1,0 +1,73 @@
+{
+  "patterns": {
+    "rest_api": {
+      "patterns": [
+        "/api/v[0-9]+/",
+        "/rest/v[0-9]+/",
+        "/v[0-9]+/api/"
+      ],
+      "description": "REST API endpoints"
+    },
+    "graphql": {
+      "patterns": [
+        "/graphql",
+        "/gql",
+        "/query"
+      ],
+      "description": "GraphQL endpoints"
+    },
+    "auth_endpoints": {
+      "patterns": [
+        "/auth/login",
+        "/auth/register",
+        "/auth/token",
+        "/oauth/token",
+        "/signin",
+        "/signup",
+        "/login",
+        "/register"
+      ],
+      "description": "Authentication endpoints"
+    },
+    "user_endpoints": {
+      "patterns": [
+        "/user/profile",
+        "/users/[0-9]+",
+        "/account",
+        "/profile",
+        "/me"
+      ],
+      "description": "User management endpoints"
+    },
+    "admin_endpoints": {
+      "patterns": [
+        "/admin",
+        "/administrator",
+        "/dashboard",
+        "/management",
+        "/control-panel"
+      ],
+      "description": "Administrative endpoints"
+    },
+    "file_endpoints": {
+      "patterns": [
+        "/upload",
+        "/download",
+        "/files",
+        "/attachments",
+        "/media"
+      ],
+      "description": "File handling endpoints"
+    },
+    "api_documentation": {
+      "patterns": [
+        "/swagger",
+        "/api-docs",
+        "/docs",
+        "/documentation",
+        "/openapi"
+      ],
+      "description": "API documentation endpoints"
+    }
+  }
+}

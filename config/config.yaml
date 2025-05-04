@@ -1,0 +1,54 @@
+# Mobile Security Scanner Configuration
+
+app:
+  name: "Mobile Security Scanner"
+  version: "1.0.0"
+
+scanning:
+  static:
+    enabled: true
+    file_extensions:
+      - .java
+      - .kt
+      - .xml
+      - .js
+      - .json
+      - .properties
+
+  dynamic:
+    enabled: true
+    timeout: 300  # seconds
+
+  network:
+    proxy:
+      host: "127.0.0.1"
+      port: 8080
+    ssl_pinning_bypass: true
+
+reporting:
+  formats:
+    - html
+    - markdown
+    - json
+
+  output_dir: "output/reports"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "output/logs/scanner.log"
+
+vulnerabilities:
+  severity_levels:
+    - Critical
+    - High
+    - Medium
+    - Low
+
+  categories:
+    - code
+    - configuration
+    - network
+    - storage
+    - runtime
+    - secret

@@ -1,0 +1,116 @@
+{
+  "android": {
+    "sql_injection": [
+      {
+        "pattern": "rawQuery\\s*\\(",
+        "severity": "High",
+        "description": "Potential SQL injection vulnerability with rawQuery"
+      },
+      {
+        "pattern": "execSQL\\s*\\([^,]+\\+",
+        "severity": "High",
+        "description": "SQL query concatenation detected"
+      }
+    ],
+    "insecure_storage": [
+      {
+        "pattern": "MODE_WORLD_READABLE|MODE_WORLD_WRITEABLE",
+        "severity": "High",
+        "description": "World readable/writable file permissions"
+      },
+      {
+        "pattern": "getSharedPreferences\\s*\\([^,]+,\\s*[0-3]\\)",
+        "severity": "Medium",
+        "description": "Potentially insecure SharedPreferences mode"
+      }
+    ],
+    "weak_crypto": [
+      {
+        "pattern": "(MD5|SHA1|DES)\\s*\\(",
+        "severity": "High",
+        "description": "Weak cryptographic algorithm detected"
+      },
+      {
+        "pattern": "Cipher\\.getInstance\\s*\\(\\s*[\"']AES[\"']\\s*\\)",
+        "severity": "Medium",
+        "description": "AES without mode specification (defaults to ECB)"
+      }
+    ],
+    "webview_issues": [
+      {
+        "pattern": "setJavaScriptEnabled\\s*\\(\\s*true\\s*\\)",
+        "severity": "Medium",
+        "description": "JavaScript enabled in WebView"
+      },
+      {
+        "pattern": "addJavascriptInterface\\s*\\(",
+        "severity": "High",
+        "description": "JavaScript interface added to WebView"
+      },
+      {
+        "pattern": "setAllowFileAccess\\s*\\(\\s*true\\s*\\)",
+        "severity": "High",
+        "description": "File access enabled in WebView"
+      }
+    ],
+    "intent_vulnerabilities": [
+      {
+        "pattern": "getSerializableExtra\\s*\\(",
+        "severity": "Medium",
+        "description": "Deserializing untrusted data from Intent"
+      },
+      {
+        "pattern": "startActivity\\s*\\([^)]*getIntent\\s*\\(\\)",
+        "severity": "Medium",
+        "description": "Potential Intent redirection vulnerability"
+      }
+    ],
+    "logging_issues": [
+      {
+        "pattern": "Log\\.(d|e|i|v|w)\\s*\\([^,]+,\\s*[^)]*(?:password|token|key|secret)",
+        "severity": "Medium",
+        "description": "Sensitive data potentially logged"
+      }
+    ]
+  },
+  "ios": {
+    "insecure_storage": [
+      {
+        "pattern": "NSUserDefaults.*(?:password|token|key)",
+        "severity": "High",
+        "description": "Sensitive data stored in NSUserDefaults"
+      },
+      {
+        "pattern": "writeToFile:.*atomically:\\s*YES",
+        "severity": "Medium",
+        "description": "Data written to file without encryption"
+      }
+    ],
+    "weak_crypto": [
+      {
+        "pattern": "CC_MD5|CC_SHA1",
+        "severity": "High",
+        "description": "Weak hash function used"
+      },
+      {
+        "pattern": "kCCAlgorithmDES",
+        "severity": "High",
+        "description": "Weak encryption algorithm (DES) used"
+      }
+    ],
+    "url_scheme": [
+      {
+        "pattern": "handleOpenURL:|application:openURL:",
+        "severity": "Medium",
+        "description": "URL scheme handler implementation"
+      }
+    ],
+    "keychain_issues": [
+      {
+        "pattern": "kSecAttrAccessibleAlways",
+        "severity": "High",
+        "description": "Keychain item accessible when device is locked"
+      }
+    ]
+  }
+}
