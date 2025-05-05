@@ -7,13 +7,12 @@ setup(
     name="mobile-security-scanner",
     version="1.0.0",
     author="Your Name",
-    author_email="your.email@example.com",
+    author_email="engahmedsherif39@gmail.com",
     description="Automated mobile application security scanner",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/mobile-security-scanner",
-    packages=find_packages(),
-    package_dir={'mobile_security_scanner': 'src'},
+    url="https://github.com/sherifjavaandroid/eeee",
+    packages=find_packages(),  # This will find all packages
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -47,13 +46,13 @@ setup(
     },
     include_package_data=True,
     package_data={
-        'mobile_security_scanner': [
+        '': [
             'templates/*.html',
             'templates/*.md',
             'scripts/*.js',
             'scripts/*.py',
-            '../data/**/*',
-            '../config/*.yaml',
+            'data/**/*',
+            'config/*.yaml',
         ],
     },
 )

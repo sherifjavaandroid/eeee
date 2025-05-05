@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: mobile-security-scanner
 Version: 1.0.0
 Summary: Automated mobile application security scanner
@@ -28,3 +28,11 @@ Requires-Dist: pyyaml>=6.0.1
 Requires-Dist: jinja2>=3.1.2
 Requires-Dist: colorama>=0.4.6
 Requires-Dist: click>=8.1.7
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

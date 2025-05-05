@@ -2,7 +2,7 @@ import subprocess
 import logging
 import shutil
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List 
 
 class Decompiler:
     def __init__(self):

@@ -15,20 +15,30 @@ def main(app_path, platform, mode, output, verbose):
 
     # Import inside function to avoid circular imports
     try:
-        from src.core.scanner import MobileSecurityScanner
-        from src.core.analyzer import SecurityAnalyzer
-        from src.core.exploiter import ExploitEngine
-        from src.modules.reporting.report_generator import ReportGenerator
-        from src.utils.file_helper import setup_output_directories
-        from config.logging_config import setup_logging
-    except ImportError:
-        # If installed as package
-        from mobile_security_scanner.core.scanner import MobileSecurityScanner
-        from mobile_security_scanner.core.analyzer import SecurityAnalyzer
-        from mobile_security_scanner.core.exploiter import ExploitEngine
-        from mobile_security_scanner.modules.reporting.report_generator import ReportGenerator
-        from mobile_security_scanner.utils.file_helper import setup_output_directories
-        from mobile_security_scanner.config.logging_config import setup_logging
+        # Try relative imports first (for development)
+        from .core.scanner import MobileSecurityScanner
+        from .core.analyzer import SecurityAnalyzer
+        from .core.exploiter import ExploitEngine
+        from .modules.reporting.report_generator import ReportGenerator
+        from .utils.file_helper import setup_output_directories
+        from ..config.logging_config import setup_logging
+    except (ImportError, ValueError):
+        try:
+            # Try absolute imports (when running as script)
+            from src.core.scanner import MobileSecurityScanner
+            from src.core.analyzer import SecurityAnalyzer
+            from src.core.exploiter import ExploitEngine
+            from src.modules.reporting.report_generator import ReportGenerator
+            from src.utils.file_helper import setup_output_directories
+            from config.logging_config import setup_logging
+        except ImportError:
+            # If installed as package
+            from mobile_security_scanner.core.scanner import MobileSecurityScanner
+            from mobile_security_scanner.core.analyzer import SecurityAnalyzer
+            from mobile_security_scanner.core.exploiter import ExploitEngine
+            from mobile_security_scanner.modules.reporting.report_generator import ReportGenerator
+            from mobile_security_scanner.utils.file_helper import setup_output_directories
+            from mobile_security_scanner.config.logging_config import setup_logging
 
     # Setup logging
     setup_logging(verbose)
