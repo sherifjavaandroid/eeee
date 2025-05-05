@@ -173,153 +173,153 @@ class CodeAnalyzer:
                                 'file': str(file_path),
                                 'line': node.lineno
                             })
-            self.generic_visit(node)
+                self.generic_visit(node)
 
-    visitor = PathTraversalVisitor()
-    visitor.visit(tree)
-    return visitor.issues
+        visitor = PathTraversalVisitor()
+        visitor.visit(tree)
+        return visitor.issues
 
-def _check_weak_crypto(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for weak cryptography patterns"""
-    vulnerabilities = []
+    def _check_weak_crypto(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for weak cryptography patterns"""
+        vulnerabilities = []
 
-    patterns = {
-        r'hashlib\.md5\(': ('MD5 hash usage', 'High'),
-        r'hashlib\.sha1\(': ('SHA1 hash usage', 'High'),
-        r'DES\.new\(': ('DES encryption usage', 'High'),
-        r'Random\(\)': ('Insecure random number generator', 'Medium'),
-        r'ECB\s*\)': ('ECB mode encryption', 'High')
-    }
+        patterns = {
+            r'hashlib\.md5\(': ('MD5 hash usage', 'High'),
+            r'hashlib\.sha1\(': ('SHA1 hash usage', 'High'),
+            r'DES\.new\(': ('DES encryption usage', 'High'),
+            r'Random\(\)': ('Insecure random number generator', 'Medium'),
+            r'ECB\s*\)': ('ECB mode encryption', 'High')
+        }
 
-    for pattern, (description, severity) in patterns.items():
+        for pattern, (description, severity) in patterns.items():
+            matches = re.finditer(pattern, content)
+            for match in matches:
+                line_number = content[:match.start()].count('\n') + 1
+                vulnerabilities.append({
+                    'type': 'weak_crypto',
+                    'severity': severity,
+                    'description': description,
+                    'file': str(file_path),
+                    'line': line_number
+                })
+
+        return vulnerabilities
+
+    def _check_java_sql_injection(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for SQL injection in Java code"""
+        vulnerabilities = []
+
+        patterns = [
+            r'Statement\.execute\w*\s*\([^;]+\+',
+            r'createStatement\s*\(\s*\)\.execute\w*\s*\([^;]+\+',
+            r'rawQuery\s*\([^,]+\+',
+            r'execSQL\s*\([^;]+\+'
+        ]
+
+        for pattern in patterns:
+            matches = re.finditer(pattern, content)
+            for match in matches:
+                line_number = content[:match.start()].count('\n') + 1
+                vulnerabilities.append({
+                    'type': 'sql_injection',
+                    'severity': 'High',
+                    'description': 'SQL injection vulnerability - string concatenation in query',
+                    'file': str(file_path),
+                    'line': line_number
+                })
+
+        return vulnerabilities
+
+    def _check_java_command_injection(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for command injection in Java code"""
+        vulnerabilities = []
+
+        patterns = [
+            r'Runtime\.getRuntime\(\)\.exec\s*\([^;]+\+',
+            r'ProcessBuilder\s*\([^;]+\+',
+            r'Process\s+\w+\s*=\s*[^;]+\+[^;]+\.exec\('
+        ]
+
+        for pattern in patterns:
+            matches = re.finditer(pattern, content)
+            for match in matches:
+                line_number = content[:match.start()].count('\n') + 1
+                vulnerabilities.append({
+                    'type': 'command_injection',
+                    'severity': 'High',
+                    'description': 'Command injection vulnerability - string concatenation in command',
+                    'file': str(file_path),
+                    'line': line_number
+                })
+
+        return vulnerabilities
+
+    def _check_java_path_traversal(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for path traversal in Java code"""
+        vulnerabilities = []
+
+        patterns = [
+            r'new\s+File\s*\([^)]*\+[^)]*\)',
+            r'Paths\.get\s*\([^)]*\+[^)]*\)',
+            r'FileInputStream\s*\([^)]*\+[^)]*\)',
+            r'FileOutputStream\s*\([^)]*\+[^)]*\)'
+        ]
+
+        for pattern in patterns:
+            matches = re.finditer(pattern, content)
+            for match in matches:
+                line_number = content[:match.start()].count('\n') + 1
+                vulnerabilities.append({
+                    'type': 'path_traversal',
+                    'severity': 'High',
+                    'description': 'Path traversal vulnerability - unsanitized file path',
+                    'file': str(file_path),
+                    'line': line_number
+                })
+
+        return vulnerabilities
+
+    def _check_java_weak_crypto(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for weak cryptography in Java code"""
+        vulnerabilities = []
+
+        patterns = {
+            r'MessageDigest\.getInstance\s*\(\s*"MD5"\s*\)': ('MD5 hash usage', 'High'),
+            r'MessageDigest\.getInstance\s*\(\s*"SHA-?1"\s*\)': ('SHA1 hash usage', 'High'),
+            r'Cipher\.getInstance\s*\(\s*"DES[^"]*"\s*\)': ('DES encryption usage', 'High'),
+            r'Cipher\.getInstance\s*\(\s*"[^"]*ECB[^"]*"\s*\)': ('ECB mode encryption', 'High'),
+            r'SecureRandom\s*\(\s*\)': ('SecureRandom without seed', 'Medium')
+        }
+
+        for pattern, (description, severity) in patterns.items():
+            matches = re.finditer(pattern, content)
+            for match in matches:
+                line_number = content[:match.start()].count('\n') + 1
+                vulnerabilities.append({
+                    'type': 'weak_crypto',
+                    'severity': severity,
+                    'description': description,
+                    'file': str(file_path),
+                    'line': line_number
+                })
+
+        return vulnerabilities
+
+    def _check_java_insecure_random(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
+        """Check for insecure random number generation"""
+        vulnerabilities = []
+
+        pattern = r'new\s+Random\s*\(\s*\)'
         matches = re.finditer(pattern, content)
+
         for match in matches:
             line_number = content[:match.start()].count('\n') + 1
             vulnerabilities.append({
-                'type': 'weak_crypto',
-                'severity': severity,
-                'description': description,
+                'type': 'insecure_random',
+                'severity': 'Medium',
+                'description': 'Insecure random number generator - use SecureRandom instead',
                 'file': str(file_path),
                 'line': line_number
             })
 
-    return vulnerabilities
-
-def _check_java_sql_injection(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for SQL injection in Java code"""
-    vulnerabilities = []
-
-    patterns = [
-        r'Statement\.execute\w*\s*\([^;]+\+',
-        r'createStatement\s*\(\s*\)\.execute\w*\s*\([^;]+\+',
-        r'rawQuery\s*\([^,]+\+',
-        r'execSQL\s*\([^;]+\+'
-    ]
-
-    for pattern in patterns:
-        matches = re.finditer(pattern, content)
-        for match in matches:
-            line_number = content[:match.start()].count('\n') + 1
-            vulnerabilities.append({
-                'type': 'sql_injection',
-                'severity': 'High',
-                'description': 'SQL injection vulnerability - string concatenation in query',
-                'file': str(file_path),
-                'line': line_number
-            })
-
-    return vulnerabilities
-
-def _check_java_command_injection(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for command injection in Java code"""
-    vulnerabilities = []
-
-    patterns = [
-        r'Runtime\.getRuntime\(\)\.exec\s*\([^;]+\+',
-        r'ProcessBuilder\s*\([^;]+\+',
-        r'Process\s+\w+\s*=\s*[^;]+\+[^;]+\.exec\('
-    ]
-
-    for pattern in patterns:
-        matches = re.finditer(pattern, content)
-        for match in matches:
-            line_number = content[:match.start()].count('\n') + 1
-            vulnerabilities.append({
-                'type': 'command_injection',
-                'severity': 'High',
-                'description': 'Command injection vulnerability - string concatenation in command',
-                'file': str(file_path),
-                'line': line_number
-            })
-
-    return vulnerabilities
-
-def _check_java_path_traversal(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for path traversal in Java code"""
-    vulnerabilities = []
-
-    patterns = [
-        r'new\s+File\s*\([^)]*\+[^)]*\)',
-        r'Paths\.get\s*\([^)]*\+[^)]*\)',
-        r'FileInputStream\s*\([^)]*\+[^)]*\)',
-        r'FileOutputStream\s*\([^)]*\+[^)]*\)'
-    ]
-
-    for pattern in patterns:
-        matches = re.finditer(pattern, content)
-        for match in matches:
-            line_number = content[:match.start()].count('\n') + 1
-            vulnerabilities.append({
-                'type': 'path_traversal',
-                'severity': 'High',
-                'description': 'Path traversal vulnerability - unsanitized file path',
-                'file': str(file_path),
-                'line': line_number
-            })
-
-    return vulnerabilities
-
-def _check_java_weak_crypto(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for weak cryptography in Java code"""
-    vulnerabilities = []
-
-    patterns = {
-        r'MessageDigest\.getInstance\s*\(\s*"MD5"\s*\)': ('MD5 hash usage', 'High'),
-        r'MessageDigest\.getInstance\s*\(\s*"SHA-?1"\s*\)': ('SHA1 hash usage', 'High'),
-        r'Cipher\.getInstance\s*\(\s*"DES[^"]*"\s*\)': ('DES encryption usage', 'High'),
-        r'Cipher\.getInstance\s*\(\s*"[^"]*ECB[^"]*"\s*\)': ('ECB mode encryption', 'High'),
-        r'SecureRandom\s*\(\s*\)': ('SecureRandom without seed', 'Medium')
-    }
-
-    for pattern, (description, severity) in patterns.items():
-        matches = re.finditer(pattern, content)
-        for match in matches:
-            line_number = content[:match.start()].count('\n') + 1
-            vulnerabilities.append({
-                'type': 'weak_crypto',
-                'severity': severity,
-                'description': description,
-                'file': str(file_path),
-                'line': line_number
-            })
-
-    return vulnerabilities
-
-def _check_java_insecure_random(self, content: str, file_path: Path) -> List[Dict[str, Any]]:
-    """Check for insecure random number generation"""
-    vulnerabilities = []
-
-    pattern = r'new\s+Random\s*\(\s*\)'
-    matches = re.finditer(pattern, content)
-
-    for match in matches:
-        line_number = content[:match.start()].count('\n') + 1
-        vulnerabilities.append({
-            'type': 'insecure_random',
-            'severity': 'Medium',
-            'description': 'Insecure random number generator - use SecureRandom instead',
-            'file': str(file_path),
-            'line': line_number
-        })
-
-    return vulnerabilities
+        return vulnerabilities

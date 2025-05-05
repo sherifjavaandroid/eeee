@@ -3,10 +3,10 @@ import subprocess
 from pathlib import Path
 from typing import Dict, List, Any
 
-from src.modules.android.apk_analyzer import APKAnalyzer
-from src.modules.ios.ipa_analyzer import IPAAnalyzer
-from src.modules.static_analysis.vulnerability_scanner import VulnerabilityScanner
-from src.modules.dynamic_analysis.frida_manager import FridaManager
+from ..modules.android.apk_analyzer import APKAnalyzer
+from ..modules.ios.ipa_analyzer import IPAAnalyzer
+from ..modules.static_analysis.vulnerability_scanner import VulnerabilityScanner
+from ..modules.dynamic_analysis.frida_manager import FridaManager
 
 class MobileSecurityScanner:
     def __init__(self, app_path: str, platform: str):
